@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CourseDashboard — Browse and search a structured course catalog with categories, search, and sorting.">
+  <title>CourseDashboard — Course Catalog Browser</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Favicon: simple inline SVG data URI -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>📖</text></svg>">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- ── Sidebar ──────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- Logo -->
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">CD</div>
+          <div>
+            <div class="sidebar-logo-text">CourseDashboard</div>
+            <div class="sidebar-logo-sub">Catalog Browser</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="sidebar-stats">
+        <div class="sidebar-stats-row">
+          <span class="sidebar-stats-label">Total Courses</span>
+          <span class="sidebar-stats-value" id="stats-total">—</span>
+        </div>
+        <div class="sidebar-stats-row">
+          <span class="sidebar-stats-label">Categories</span>
+          <span class="sidebar-stats-value" id="stats-cats">—</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <div class="sidebar-nav-label">Categories</div>
+        <!-- Rendered by JS -->
+      </nav>
+
+      <!-- Footer: Dark Mode Toggle -->
+      <div class="sidebar-footer">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+          <span class="theme-toggle-label">
+            <span>☀️</span>
+            <span>Light Mode</span>
+          </span>
+          <div class="theme-toggle-track">
+            <div class="theme-toggle-thumb"></div>
+          </div>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- ── Main Content ─────────────────────────────────── -->
+    <main class="main">
+
+      <!-- Header / Toolbar -->
+      <header class="header">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open navigation menu">☰</button>
+
+        <!-- Search -->
+        <div class="search-container">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            class="search-input"
+            id="search-input"
+            placeholder="Search courses… (⌘K)"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+        </div>
+
+        <!-- Actions -->
+        <div class="header-actions">
+          <button class="sort-btn" id="sort-btn" data-dir="asc" aria-label="Toggle sort order">
+            <span class="sort-icon">↕</span>
+            <span>A → Z</span>
+          </button>
+          <span class="results-count" id="results-count">—</span>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content">
+
+        <!-- Category Banner -->
+        <div class="category-banner">
+          <h1 id="category-title">All Courses</h1>
+          <p id="category-desc">Loading catalog…</p>
+        </div>
+
+        <!-- Card Grid -->
+        <div class="card-grid" id="card-grid">
+          <!-- Loading state -->
+          <div class="loading-state" style="grid-column: 1 / -1;">
+            <div class="loading-spinner"></div>
+            <p>Loading course catalog…</p>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
