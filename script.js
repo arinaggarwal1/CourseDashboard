@@ -19,20 +19,20 @@
 
 // ── Application State ───────────────────────────────────────
 const state = {
-  /** @type {{ name: string, courses: Course[] }[]} */
-  categories: [],
+    /** @type {{ name: string, courses: Course[] }[]} */
+    categories: [],
 
-  /** Currently selected category name, or 'all' */
-  activeCategory: 'all',
+    /** Currently selected category name, or 'all' */
+    activeCategory: 'all',
 
-  /** Current search query (lowercase, trimmed) */
-  searchQuery: '',
+    /** Current search query (lowercase, trimmed) */
+    searchQuery: '',
 
-  /** Sort direction: 'asc' | 'desc' */
-  sortDir: 'asc',
+    /** Sort direction: 'asc' | 'desc' */
+    sortDir: 'asc',
 
-  /** Total number of courses across all categories */
-  totalCourses: 0,
+    /** Total number of courses across all categories */
+    totalCourses: 0,
 };
 
 // ── Course Data Model ───────────────────────────────────────
@@ -56,20 +56,20 @@ const state = {
 
 // ── DOM References ──────────────────────────────────────────
 const DOM = {
-  sidebarNav:    () => document.getElementById('sidebar-nav'),
-  cardGrid:      () => document.getElementById('card-grid'),
-  searchInput:   () => document.getElementById('search-input'),
-  searchClear:   () => document.getElementById('search-clear'),
-  sortBtn:       () => document.getElementById('sort-btn'),
-  categoryTitle: () => document.getElementById('category-title'),
-  categoryDesc:  () => document.getElementById('category-desc'),
-  resultsCount:  () => document.getElementById('results-count'),
-  themeToggle:   () => document.getElementById('theme-toggle'),
-  sidebar:       () => document.getElementById('sidebar'),
-  sidebarOverlay:() => document.getElementById('sidebar-overlay'),
-  mobileMenuBtn: () => document.getElementById('mobile-menu-btn'),
-  statsTotal:    () => document.getElementById('stats-total'),
-  statsCats:     () => document.getElementById('stats-cats'),
+    sidebarNav: () => document.getElementById('sidebar-nav'),
+    cardGrid: () => document.getElementById('card-grid'),
+    searchInput: () => document.getElementById('search-input'),
+    searchClear: () => document.getElementById('search-clear'),
+    sortBtn: () => document.getElementById('sort-btn'),
+    categoryTitle: () => document.getElementById('category-title'),
+    categoryDesc: () => document.getElementById('category-desc'),
+    resultsCount: () => document.getElementById('results-count'),
+    themeToggle: () => document.getElementById('theme-toggle'),
+    sidebar: () => document.getElementById('sidebar'),
+    sidebarOverlay: () => document.getElementById('sidebar-overlay'),
+    mobileMenuBtn: () => document.getElementById('mobile-menu-btn'),
+    statsTotal: () => document.getElementById('stats-total'),
+    statsCats: () => document.getElementById('stats-cats'),
 };
 
 // ============================================================
@@ -94,36 +94,36 @@ const DOM = {
  * @returns {{ name: string, courses: Course[] }[]}
  */
 function parseCatalog(raw) {
-  const lines = raw.split('\n');
-  const categories = [];
-  let currentCategory = null;
+    const lines = raw.split('\n');
+    const categories = [];
+    let currentCategory = null;
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
 
-    // Skip blank lines
-    if (!line) continue;
+        // Skip blank lines
+        if (!line) continue;
 
-    // ── Detect category header ──
-    // A line is a category header if it is ALL CAPS (letters, digits,
-    // spaces, ampersands, and punctuation — but no lowercase letters)
-    // and does NOT start with a digit (which would be a course line).
-    if (isCategoryHeader(line)) {
-      currentCategory = { name: formatCategoryName(line), courses: [] };
-      categories.push(currentCategory);
-      continue;
+        // ── Detect category header ──
+        // A line is a category header if it is ALL CAPS (letters, digits,
+        // spaces, ampersands, and punctuation — but no lowercase letters)
+        // and does NOT start with a digit (which would be a course line).
+        if (isCategoryHeader(line)) {
+            currentCategory = { name: formatCategoryName(line), courses: [] };
+            categories.push(currentCategory);
+            continue;
+        }
+
+        // ── Parse course line ──
+        if (currentCategory) {
+            const course = parseCourseLine(line, currentCategory.name, currentCategory.courses.length + 1);
+            if (course) {
+                currentCategory.courses.push(course);
+            }
+        }
     }
 
-    // ── Parse course line ──
-    if (currentCategory) {
-      const course = parseCourseLine(line, currentCategory.name, currentCategory.courses.length + 1);
-      if (course) {
-        currentCategory.courses.push(course);
-      }
-    }
-  }
-
-  return categories;
+    return categories;
 }
 
 /**
@@ -131,13 +131,13 @@ function parseCatalog(raw) {
  * Category headers are ALL-CAPS with no leading digit.
  */
 function isCategoryHeader(line) {
-  // Must not start with a digit (course lines start with numbers)
-  if (/^\d/.test(line)) return false;
-  // Must contain at least 2 alphabetic characters
-  if ((line.match(/[A-Za-z]/g) || []).length < 2) return false;
-  // Must not contain any lowercase letters
-  if (/[a-z]/.test(line)) return false;
-  return true;
+    // Must not start with a digit (course lines start with numbers)
+    if (/^\d/.test(line)) return false;
+    // Must contain at least 2 alphabetic characters
+    if ((line.match(/[A-Za-z]/g) || []).length < 2) return false;
+    // Must not contain any lowercase letters
+    if (/[a-z]/.test(line)) return false;
+    return true;
 }
 
 /**
@@ -145,21 +145,21 @@ function isCategoryHeader(line) {
  * Preserves special tokens like "FP&A", "AI", etc.
  */
 function formatCategoryName(raw) {
-  // Keep the original casing for the category name as-is (already all-caps in source)
-  // We'll display it with proper casing
-  const specialTokens = {
-    'FP&A': 'FP&A',
-    'AI': 'AI',
-    'EXCEL AND POWERPOINT': 'Excel & PowerPoint',
-    'DATA ANALYSIS & AI': 'Data Analysis & AI',
-    'MERGERS & ACQUISITIONS': 'Mergers & Acquisitions',
-  };
+    // Keep the original casing for the category name as-is (already all-caps in source)
+    // We'll display it with proper casing
+    const specialTokens = {
+        'FP&A': 'FP&A',
+        'AI': 'AI',
+        'EXCEL AND POWERPOINT': 'Excel & PowerPoint',
+        'DATA ANALYSIS & AI': 'Data Analysis & AI',
+        'MERGERS & ACQUISITIONS': 'Mergers & Acquisitions',
+    };
 
-  if (specialTokens[raw]) return specialTokens[raw];
+    if (specialTokens[raw]) return specialTokens[raw];
 
-  // General Title Case conversion
-  return raw.toLowerCase().replace(/(?:^|\s)\S/g, c => c.toUpperCase())
-    .replace(/\bAnd\b/g, '&');
+    // General Title Case conversion
+    return raw.toLowerCase().replace(/(?:^|\s)\S/g, c => c.toUpperCase())
+        .replace(/\bAnd\b/g, '&');
 }
 
 /**
@@ -176,51 +176,51 @@ function formatCategoryName(raw) {
  * @returns {Course|null}
  */
 function parseCourseLine(line, categoryName, fallbackIndex) {
-  // Remove leading number + dot: "1.  " or "10. "
-  const numberMatch = line.match(/^(\d+)\.\s+/);
-  if (!numberMatch) return null; // Not a course line
+    // Remove leading number + dot: "1.  " or "10. "
+    const numberMatch = line.match(/^(\d+)\.\s+/);
+    if (!numberMatch) return null; // Not a course line
 
-  const index = parseInt(numberMatch[1], 10);
-  const rest = line.slice(numberMatch[0].length);
+    const index = parseInt(numberMatch[1], 10);
+    const rest = line.slice(numberMatch[0].length);
 
-  // Split by pipe
-  const parts = rest.split('|').map(s => s.trim());
+    // Split by pipe
+    const parts = rest.split('|').map(s => s.trim());
 
-  const title = parts[0] || '';
-  let duration = parts[1] || '';
-  let lessonsRaw = parts[2] || '';
+    const title = parts[0] || '';
+    let duration = parts[1] || '';
+    let lessonsRaw = parts[2] || '';
 
-  // Clean up duration
-  if (duration.toLowerCase() === 'n/a' || duration === '0' || duration === '') {
-    duration = '';
-  }
-
-  // Parse lesson count and exam flag
-  let lessonCount = 0;
-  let hasExam = false;
-  if (lessonsRaw) {
-    const lessonMatch = lessonsRaw.match(/(\d+)\s*Lessons?/i);
-    if (lessonMatch) {
-      lessonCount = parseInt(lessonMatch[1], 10);
+    // Clean up duration
+    if (duration.toLowerCase() === 'n/a' || duration === '0' || duration === '') {
+        duration = '';
     }
-    hasExam = /exam/i.test(lessonsRaw);
-  }
 
-  // Build formatted lessons string
-  let lessons = '';
-  if (lessonCount > 0) {
-    lessons = `${lessonCount} Lesson${lessonCount !== 1 ? 's' : ''}`;
-  }
+    // Parse lesson count and exam flag
+    let lessonCount = 0;
+    let hasExam = false;
+    if (lessonsRaw) {
+        const lessonMatch = lessonsRaw.match(/(\d+)\s*Lessons?/i);
+        if (lessonMatch) {
+            lessonCount = parseInt(lessonMatch[1], 10);
+        }
+        hasExam = /exam/i.test(lessonsRaw);
+    }
 
-  return {
-    title,
-    duration,
-    lessons,
-    hasExam,
-    lessonCount,
-    category: categoryName,
-    index,
-  };
+    // Build formatted lessons string
+    let lessons = '';
+    if (lessonCount > 0) {
+        lessons = `${lessonCount} Lesson${lessonCount !== 1 ? 's' : ''}`;
+    }
+
+    return {
+        title,
+        duration,
+        lessons,
+        hasExam,
+        lessonCount,
+        category: categoryName,
+        index,
+    };
 }
 
 // ============================================================
@@ -237,34 +237,34 @@ function parseCourseLine(line, categoryName, fallbackIndex) {
  * @returns {Course[]}
  */
 function getFilteredCourses() {
-  let courses = [];
+    let courses = [];
 
-  // Stage 1: Category filter
-  if (state.activeCategory === 'all') {
-    state.categories.forEach(cat => {
-      courses = courses.concat(cat.courses);
+    // Stage 1: Category filter
+    if (state.activeCategory === 'all') {
+        state.categories.forEach(cat => {
+            courses = courses.concat(cat.courses);
+        });
+    } else {
+        const cat = state.categories.find(c => c.name === state.activeCategory);
+        if (cat) courses = [...cat.courses];
+    }
+
+    // Stage 2: Search filter
+    if (state.searchQuery) {
+        const q = state.searchQuery;
+        courses = courses.filter(c =>
+            c.title.toLowerCase().includes(q) ||
+            c.category.toLowerCase().includes(q)
+        );
+    }
+
+    // Stage 3: Sort
+    courses.sort((a, b) => {
+        const cmp = a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
+        return state.sortDir === 'asc' ? cmp : -cmp;
     });
-  } else {
-    const cat = state.categories.find(c => c.name === state.activeCategory);
-    if (cat) courses = [...cat.courses];
-  }
 
-  // Stage 2: Search filter
-  if (state.searchQuery) {
-    const q = state.searchQuery;
-    courses = courses.filter(c =>
-      c.title.toLowerCase().includes(q) ||
-      c.category.toLowerCase().includes(q)
-    );
-  }
-
-  // Stage 3: Sort
-  courses.sort((a, b) => {
-    const cmp = a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
-    return state.sortDir === 'asc' ? cmp : -cmp;
-  });
-
-  return courses;
+    return courses;
 }
 
 // ============================================================
@@ -275,16 +275,16 @@ function getFilteredCourses() {
  * Renders the sidebar category navigation.
  */
 function renderSidebar() {
-  const nav = DOM.sidebarNav();
-  if (!nav) return;
+    const nav = DOM.sidebarNav();
+    if (!nav) return;
 
-  // Count total courses
-  const totalCount = state.categories.reduce((sum, cat) => sum + cat.courses.length, 0);
+    // Count total courses
+    const totalCount = state.categories.reduce((sum, cat) => sum + cat.courses.length, 0);
 
-  let html = '';
+    let html = '';
 
-  // "All Courses" item
-  html += `
+    // "All Courses" item
+    html += `
     <button class="sidebar-item${state.activeCategory === 'all' ? ' active' : ''}"
             data-category="all"
             aria-current="${state.activeCategory === 'all' ? 'true' : 'false'}">
@@ -293,10 +293,10 @@ function renderSidebar() {
     </button>
   `;
 
-  // Category items
-  state.categories.forEach(cat => {
-    const isActive = state.activeCategory === cat.name;
-    html += `
+    // Category items
+    state.categories.forEach(cat => {
+        const isActive = state.activeCategory === cat.name;
+        html += `
       <button class="sidebar-item${isActive ? ' active' : ''}"
               data-category="${escapeAttr(cat.name)}"
               aria-current="${isActive ? 'true' : 'false'}">
@@ -304,72 +304,72 @@ function renderSidebar() {
         <span class="sidebar-item-count">${cat.courses.length}</span>
       </button>
     `;
-  });
+    });
 
-  nav.innerHTML = html;
+    nav.innerHTML = html;
 
-  // Update stats
-  const statsTotal = DOM.statsTotal();
-  const statsCats = DOM.statsCats();
-  if (statsTotal) statsTotal.textContent = totalCount;
-  if (statsCats) statsCats.textContent = state.categories.length;
+    // Update stats
+    const statsTotal = DOM.statsTotal();
+    const statsCats = DOM.statsCats();
+    if (statsTotal) statsTotal.textContent = totalCount;
+    if (statsCats) statsCats.textContent = state.categories.length;
 }
 
 /**
  * Renders course cards into the grid.
  */
 function renderCards() {
-  const grid = DOM.cardGrid();
-  if (!grid) return;
+    const grid = DOM.cardGrid();
+    if (!grid) return;
 
-  const courses = getFilteredCourses();
+    const courses = getFilteredCourses();
 
-  // Update results count
-  const resultsEl = DOM.resultsCount();
-  if (resultsEl) {
-    resultsEl.textContent = `${courses.length} course${courses.length !== 1 ? 's' : ''}`;
-  }
-
-  // Update category banner
-  const titleEl = DOM.categoryTitle();
-  const descEl = DOM.categoryDesc();
-  if (titleEl) {
-    titleEl.textContent = state.activeCategory === 'all' ? 'All Courses' : state.activeCategory;
-  }
-  if (descEl) {
-    if (state.searchQuery) {
-      descEl.textContent = `Showing results for "${state.searchQuery}"`;
-    } else if (state.activeCategory === 'all') {
-      descEl.textContent = `Browse the complete catalog across ${state.categories.length} categories`;
-    } else {
-      const cat = state.categories.find(c => c.name === state.activeCategory);
-      descEl.textContent = cat ? `${cat.courses.length} courses in this category` : '';
+    // Update results count
+    const resultsEl = DOM.resultsCount();
+    if (resultsEl) {
+        resultsEl.textContent = `${courses.length} course${courses.length !== 1 ? 's' : ''}`;
     }
-  }
 
-  // Empty state
-  if (courses.length === 0) {
-    grid.innerHTML = `
+    // Update category banner
+    const titleEl = DOM.categoryTitle();
+    const descEl = DOM.categoryDesc();
+    if (titleEl) {
+        titleEl.textContent = state.activeCategory === 'all' ? 'All Courses' : state.activeCategory;
+    }
+    if (descEl) {
+        if (state.searchQuery) {
+            descEl.textContent = `Showing results for "${state.searchQuery}"`;
+        } else if (state.activeCategory === 'all') {
+            descEl.textContent = `Browse the complete catalog across ${state.categories.length} categories`;
+        } else {
+            const cat = state.categories.find(c => c.name === state.activeCategory);
+            descEl.textContent = cat ? `${cat.courses.length} courses in this category` : '';
+        }
+    }
+
+    // Empty state
+    if (courses.length === 0) {
+        grid.innerHTML = `
       <div class="empty-state" style="grid-column: 1 / -1;">
         <div class="empty-state-icon">🔍</div>
         <h2>No courses found</h2>
         <p>${state.searchQuery
-          ? 'Try adjusting your search terms or selecting a different category.'
-          : 'This category doesn\'t have any courses yet.'
-        }</p>
+                ? 'Try adjusting your search terms or selecting a different category.'
+                : 'This category doesn\'t have any courses yet.'
+            }</p>
       </div>
     `;
-    return;
-  }
+        return;
+    }
 
-  // Build cards
-  let html = '';
-  courses.forEach((course, i) => {
-    const showCategory = state.activeCategory === 'all' || !!state.searchQuery;
-    html += buildCardHTML(course, showCategory);
-  });
+    // Build cards
+    let html = '';
+    courses.forEach((course, i) => {
+        const showCategory = state.activeCategory === 'all' || !!state.searchQuery;
+        html += buildCardHTML(course, showCategory);
+    });
 
-  grid.innerHTML = html;
+    grid.innerHTML = html;
 }
 
 /**
@@ -383,43 +383,43 @@ function renderCards() {
  * @returns {string}
  */
 function buildCardHTML(course, showCategory) {
-  const titleHTML = state.searchQuery
-    ? highlightMatch(escapeHtml(course.title), state.searchQuery)
-    : escapeHtml(course.title);
+    const titleHTML = state.searchQuery
+        ? highlightMatch(escapeHtml(course.title), state.searchQuery)
+        : escapeHtml(course.title);
 
-  let metaChips = '';
+    let metaChips = '';
 
-  // Duration chip (hidden if blank or n/a)
-  if (course.duration) {
-    metaChips += `
+    // Duration chip (hidden if blank or n/a)
+    if (course.duration) {
+        metaChips += `
       <span class="chip chip-duration">
         <span class="chip-icon">⏱</span>
         ${escapeHtml(course.duration)}
       </span>
     `;
-  }
+    }
 
-  // Lessons chip (hidden if 0 or blank)
-  if (course.lessons) {
-    metaChips += `
+    // Lessons chip (hidden if 0 or blank)
+    if (course.lessons) {
+        metaChips += `
       <span class="chip chip-lessons">
         <span class="chip-icon">📚</span>
         ${escapeHtml(course.lessons)}
       </span>
     `;
-  }
+    }
 
-  // Exam chip
-  if (course.hasExam) {
-    metaChips += `
+    // Exam chip
+    if (course.hasExam) {
+        metaChips += `
       <span class="chip chip-exam">
         <span class="chip-icon">✎</span>
         Exam
       </span>
     `;
-  }
+    }
 
-  return `
+    return `
     <article class="course-card" data-title="${escapeAttr(course.title)}">
       <span class="course-card-number">${course.index}</span>
       ${showCategory ? `<div class="course-card-category">${escapeHtml(course.category)}</div>` : ''}
@@ -436,9 +436,9 @@ function buildCardHTML(course, showCategory) {
  * @returns {string}
  */
 function highlightMatch(text, query) {
-  if (!query) return text;
-  const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
-  return text.replace(regex, '<mark>$1</mark>');
+    if (!query) return text;
+    const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
 }
 
 // ============================================================
@@ -449,121 +449,121 @@ function highlightMatch(text, query) {
  * Initializes all event listeners.
  */
 function initEvents() {
-  // ── Sidebar category click ──
-  DOM.sidebarNav()?.addEventListener('click', (e) => {
-    const btn = e.target.closest('.sidebar-item');
-    if (!btn) return;
-    const category = btn.dataset.category;
-    state.activeCategory = category;
-    renderSidebar();
-    renderCards();
-    closeMobileSidebar();
-  });
-
-  // ── Search input ──
-  const searchInput = DOM.searchInput();
-  if (searchInput) {
-    let debounceTimer;
-    searchInput.addEventListener('input', () => {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        state.searchQuery = searchInput.value.trim().toLowerCase();
-
-        // Show/hide clear button
-        const clearBtn = DOM.searchClear();
-        if (clearBtn) {
-          clearBtn.classList.toggle('visible', searchInput.value.length > 0);
-        }
-
-        // When searching, show results across all categories
-        if (state.searchQuery && state.activeCategory !== 'all') {
-          state.activeCategory = 'all';
-          renderSidebar();
-        }
-
+    // ── Sidebar category click ──
+    DOM.sidebarNav()?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.sidebar-item');
+        if (!btn) return;
+        const category = btn.dataset.category;
+        state.activeCategory = category;
+        renderSidebar();
         renderCards();
-      }, 120); // Debounce for smooth feel
+        closeMobileSidebar();
     });
-  }
 
-  // ── Search clear ──
-  DOM.searchClear()?.addEventListener('click', () => {
+    // ── Search input ──
     const searchInput = DOM.searchInput();
     if (searchInput) {
-      searchInput.value = '';
-      state.searchQuery = '';
-      DOM.searchClear()?.classList.remove('visible');
-      renderCards();
-      searchInput.focus();
+        let debounceTimer;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                state.searchQuery = searchInput.value.trim().toLowerCase();
+
+                // Show/hide clear button
+                const clearBtn = DOM.searchClear();
+                if (clearBtn) {
+                    clearBtn.classList.toggle('visible', searchInput.value.length > 0);
+                }
+
+                // When searching, show results across all categories
+                if (state.searchQuery && state.activeCategory !== 'all') {
+                    state.activeCategory = 'all';
+                    renderSidebar();
+                }
+
+                renderCards();
+            }, 120); // Debounce for smooth feel
+        });
     }
-  });
 
-  // ── Sort toggle ──
-  DOM.sortBtn()?.addEventListener('click', () => {
-    state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
-    const btn = DOM.sortBtn();
-    if (btn) {
-      btn.dataset.dir = state.sortDir;
-      btn.querySelector('span:not(.sort-icon)').textContent =
-        state.sortDir === 'asc' ? 'A → Z' : 'Z → A';
-    }
-    renderCards();
-  });
+    // ── Search clear ──
+    DOM.searchClear()?.addEventListener('click', () => {
+        const searchInput = DOM.searchInput();
+        if (searchInput) {
+            searchInput.value = '';
+            state.searchQuery = '';
+            DOM.searchClear()?.classList.remove('visible');
+            renderCards();
+            searchInput.focus();
+        }
+    });
 
-  // ── Theme toggle ──
-  DOM.themeToggle()?.addEventListener('click', () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const newTheme = isDark ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeToggleLabel(newTheme);
-  });
-
-  // ── Mobile menu ──
-  DOM.mobileMenuBtn()?.addEventListener('click', openMobileSidebar);
-  DOM.sidebarOverlay()?.addEventListener('click', closeMobileSidebar);
-
-  // ── Keyboard shortcut: Cmd/Ctrl + K to focus search ──
-  document.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      DOM.searchInput()?.focus();
-    }
-    // Escape to close sidebar or clear search
-    if (e.key === 'Escape') {
-      closeMobileSidebar();
-      const searchInput = DOM.searchInput();
-      if (searchInput && document.activeElement === searchInput && searchInput.value) {
-        searchInput.value = '';
-        state.searchQuery = '';
-        DOM.searchClear()?.classList.remove('visible');
+    // ── Sort toggle ──
+    DOM.sortBtn()?.addEventListener('click', () => {
+        state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+        const btn = DOM.sortBtn();
+        if (btn) {
+            btn.dataset.dir = state.sortDir;
+            btn.querySelector('span:not(.sort-icon)').textContent =
+                state.sortDir === 'asc' ? 'A → Z' : 'Z → A';
+        }
         renderCards();
-      }
-    }
-  });
+    });
+
+    // ── Theme toggle ──
+    DOM.themeToggle()?.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const newTheme = isDark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeToggleLabel(newTheme);
+    });
+
+    // ── Mobile menu ──
+    DOM.mobileMenuBtn()?.addEventListener('click', openMobileSidebar);
+    DOM.sidebarOverlay()?.addEventListener('click', closeMobileSidebar);
+
+    // ── Keyboard shortcut: Cmd/Ctrl + K to focus search ──
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            DOM.searchInput()?.focus();
+        }
+        // Escape to close sidebar or clear search
+        if (e.key === 'Escape') {
+            closeMobileSidebar();
+            const searchInput = DOM.searchInput();
+            if (searchInput && document.activeElement === searchInput && searchInput.value) {
+                searchInput.value = '';
+                state.searchQuery = '';
+                DOM.searchClear()?.classList.remove('visible');
+                renderCards();
+            }
+        }
+    });
 }
 
 function openMobileSidebar() {
-  DOM.sidebar()?.classList.add('open');
-  DOM.sidebarOverlay()?.classList.add('open');
-  document.body.style.overflow = 'hidden';
+    DOM.sidebar()?.classList.add('open');
+    DOM.sidebarOverlay()?.classList.add('open');
+    document.body.style.overflow = 'hidden';
 }
 
 function closeMobileSidebar() {
-  DOM.sidebar()?.classList.remove('open');
-  DOM.sidebarOverlay()?.classList.remove('open');
-  document.body.style.overflow = '';
+    DOM.sidebar()?.classList.remove('open');
+    DOM.sidebarOverlay()?.classList.remove('open');
+    document.body.style.overflow = '';
 }
 
 function updateThemeToggleLabel(theme) {
-  const label = document.querySelector('.theme-toggle-label span:last-child');
-  if (label) {
-    label.textContent = theme === 'dark' ? 'Dark Mode' : 'Light Mode';
-  }
-  const icon = document.querySelector('.theme-toggle-label span:first-child');
-  if (icon) {
-    icon.textContent = theme === 'dark' ? '🌙' : '☀️';
-  }
+    const label = document.querySelector('.theme-toggle-label span:last-child');
+    if (label) {
+        label.textContent = theme === 'dark' ? 'Dark Mode' : 'Light Mode';
+    }
+    const icon = document.querySelector('.theme-toggle-label span:first-child');
+    if (icon) {
+        icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    }
 }
 
 // ============================================================
@@ -571,17 +571,117 @@ function updateThemeToggleLabel(theme) {
 // ============================================================
 
 function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
 }
 
 function escapeAttr(str) {
-  return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// ============================================================
+// AUTHENTICATION – Client-side password gate
+// ============================================================
+
+/**
+ * SHA-256 hash of the access password.
+ *
+ * ── HOW TO CHANGE THE PASSWORD ──
+ * 1. Open browser console
+ * 2. Run: crypto.subtle.digest('SHA-256', new TextEncoder().encode('YOUR_NEW_PASSWORD')).then(b => console.log([...new Uint8Array(b)].map(x => x.toString(16).padStart(2,'0')).join('')))
+ * 3. Copy the hash output and replace the PASSWORD_HASH string below
+ *
+ * Current password: "coursedashboard"
+ */
+const PASSWORD_HASH = '684fe45054ec58ef6783c2ff6a07796c2e07e9a65429443359a5290de1d98b8d';
+
+/**
+ * Computes the SHA-256 hex digest of a string.
+ * @param {string} str
+ * @returns {Promise<string>}
+ */
+async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return [...new Uint8Array(buf)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
+/**
+ * Checks if the user is already authenticated in this session.
+ */
+function isAuthenticated() {
+    return sessionStorage.getItem('cd_auth') === '1';
+}
+
+/**
+ * Marks the user as authenticated for this session.
+ */
+function setAuthenticated() {
+    sessionStorage.setItem('cd_auth', '1');
+}
+
+/**
+ * Validates the entered password against the stored hash.
+ * @param {string} password
+ * @returns {Promise<boolean>}
+ */
+async function validatePassword(password) {
+    const hash = await sha256(password);
+    return hash === PASSWORD_HASH;
+}
+
+/**
+ * Initializes the auth gate listeners.
+ */
+function initAuth() {
+    const overlay = document.getElementById('auth-overlay');
+    const form = document.getElementById('auth-form');
+    const input = document.getElementById('auth-password');
+    const errorEl = document.getElementById('auth-error');
+    const toggleVis = document.getElementById('auth-toggle-vis');
+    const app = document.getElementById('app');
+
+    // Toggle password visibility
+    toggleVis?.addEventListener('click', () => {
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        toggleVis.textContent = isPassword ? '🙈' : '👁';
+        input.focus();
+    });
+
+    // Form submit
+    form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const password = input.value;
+        if (!password) return;
+
+        const valid = await validatePassword(password);
+        if (valid) {
+            setAuthenticated();
+            overlay.classList.add('hidden');
+            app.style.display = '';
+            // Now load the dashboard
+            await loadDashboard();
+        } else {
+            errorEl.textContent = 'Incorrect password. Try again.';
+            input.classList.add('error');
+            input.value = '';
+            input.focus();
+            setTimeout(() => {
+                input.classList.remove('error');
+            }, 600);
+        }
+    });
+
+    // Clear error on new input
+    input?.addEventListener('input', () => {
+        errorEl.textContent = '';
+        input.classList.remove('error');
+    });
 }
 
 // ============================================================
@@ -589,53 +689,67 @@ function escapeRegex(str) {
 // ============================================================
 
 /**
- * Application entry point.
- * Fetches courses.txt relative to the site root, parses it,
- * and bootstraps the UI.
+ * Loads and renders the course catalog.
+ * Separated from init() so it can be called after authentication.
  */
-async function init() {
-  // ── Restore saved theme ──
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeToggleLabel(savedTheme);
-  } else {
-    // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      updateThemeToggleLabel('dark');
-    }
-  }
+async function loadDashboard() {
+    try {
+        const response = await fetch('./courses.txt');
+        if (!response.ok) throw new Error(`Failed to load courses.txt (${response.status})`);
+        const raw = await response.text();
 
-  try {
-    // Fetch the catalog file (relative path works for both local & deployed)
-    const response = await fetch('./courses.txt');
-    if (!response.ok) throw new Error(`Failed to load courses.txt (${response.status})`);
-    const raw = await response.text();
+        state.categories = parseCatalog(raw);
+        state.totalCourses = state.categories.reduce((sum, cat) => sum + cat.courses.length, 0);
 
-    // Parse
-    state.categories = parseCatalog(raw);
-    state.totalCourses = state.categories.reduce((sum, cat) => sum + cat.courses.length, 0);
-
-    // Render
-    renderSidebar();
-    renderCards();
-    initEvents();
-
-  } catch (err) {
-    console.error('CourseDashboard init error:', err);
-    const grid = DOM.cardGrid();
-    if (grid) {
-      grid.innerHTML = `
+        renderSidebar();
+        renderCards();
+        initEvents();
+    } catch (err) {
+        console.error('CourseDashboard init error:', err);
+        const grid = DOM.cardGrid();
+        if (grid) {
+            grid.innerHTML = `
         <div class="empty-state" style="grid-column: 1 / -1;">
           <div class="empty-state-icon">⚠️</div>
           <h2>Unable to load courses</h2>
           <p>Make sure <code>courses.txt</code> is in the same folder as <code>index.html</code> and you're serving the site via a local server or a static host.</p>
         </div>
       `;
+        }
     }
-  }
+}
+
+/**
+ * Application entry point.
+ * Checks auth state, shows login gate or loads dashboard.
+ */
+async function init() {
+    // ── Restore saved theme ──
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeToggleLabel(savedTheme);
+    } else {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateThemeToggleLabel('dark');
+        }
+    }
+
+    const overlay = document.getElementById('auth-overlay');
+    const app = document.getElementById('app');
+
+    if (isAuthenticated()) {
+        // Already authenticated — skip login, show dashboard
+        overlay.classList.add('hidden');
+        app.style.display = '';
+        await loadDashboard();
+    } else {
+        // Show login gate
+        initAuth();
+    }
 }
 
 // Boot!
 document.addEventListener('DOMContentLoaded', init);
+
