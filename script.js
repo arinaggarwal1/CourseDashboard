@@ -598,7 +598,7 @@ function escapeRegex(str) {
  *
  * Current password: "coursedashboard"
  */
-const PASSWORD_HASH = '684fe45054ec58ef6783c2ff6a07796c2e07e9a65429443359a5290de1d98b8d';
+const PASSWORD_HASH = '05a181f00c157f70413d33701778a6ee7d2747ac18b9c0fbb8bd71a62dd7a223';
 
 /**
  * Computes the SHA-256 hex digest of a string.
