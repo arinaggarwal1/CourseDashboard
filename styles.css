@@ -607,6 +607,32 @@ body {
     letter-spacing: 0.6px;
 }
 
+/* Linked card (clickable → Drive) */
+a.course-card-linked {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+a.course-card-linked:hover {
+    border-color: var(--accent);
+}
+
+.course-card-link-icon {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    font-size: 14px;
+    color: var(--text-tertiary);
+    opacity: 0;
+    transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+a.course-card-linked:hover .course-card-link-icon {
+    opacity: 1;
+    color: var(--accent);
+}
+
 .course-card-meta {
     display: flex;
     flex-wrap: wrap;
