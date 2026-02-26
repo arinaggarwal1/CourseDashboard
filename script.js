@@ -34,39 +34,66 @@ const state = {
     /** Total number of courses across all categories */
     totalCourses: 0,
 };
-
-// ============================================================
-// DRIVE LINKS – Maps course titles to Google Drive folder URLs
-// ============================================================
-// To add a new link: just add a line  'Course Title': 'https://drive...',
-// The key must match the course title exactly as it appears in courses.txt.
-
+// ── Drive Links (from CourseLinks.json) ─────────────────────
 const DRIVE_LINKS = {
-    // ── Accounting ─────────────────────────────────────────────
+    'A Practitioner\'s Guide to Private Company Analysis': 'https://drive.google.com/drive/folders/1mgRZmJ7vMgSCQ50FGbk8V-kaAUCNhGBg',
     'Accounting Crash Course': 'https://drive.google.com/drive/folders/1XCFaoUZRCnj5hUh7Bfyv-Az4RnyH--82',
+    'Adjusted EBITDA': 'https://drive.google.com/drive/folders/1gV45oWGvVfAJ-TXlwK0mpiVHlzsH6PwV',
     'Advanced Accounting': 'https://drive.google.com/drive/folders/1KxiVQRscIuBWG2J53uX6TosxNlepo3JN',
     'Analyzing Financial Reports': 'https://drive.google.com/drive/folders/1xCtgjIV-re9ZP9lFvr6b7DAY1ZYaTZZs',
-    'Corporate Finance Crash Course': 'https://drive.google.com/drive/folders/1A0FNMsMkAgSZAI4FPERYP4zYhFdrEXO-',
-    'Deconstructing Intercompany Investments': 'https://drive.google.com/drive/folders/17SYz8707ryw-N2893HGSin_9WEzjE8de',
-    'The Impact of Tax Reform on Financial Models': 'https://drive.google.com/drive/folders/1S4DspPkgtz1JUZjxVzYDRl2H__CLzSAP',
-    'Understanding Purchase Price Allocation': 'https://drive.google.com/drive/folders/1IK7bID43ptC8E742V2eJ62MwxKs9sRdW',
-    'US GAAP and IFRS: Financial Reporting Differences in a Global Economy': 'https://drive.google.com/drive/folders/1cS3DCe7kwOqL5gy9ja_uDgRYBlbuS8tY',
-
-    // ── Asset Management ──────────────────────────────────────
+    'Artificial Intelligence in PE Due Diligence': 'https://drive.google.com/drive/folders/15g0tGJsawxtBCO88GjtPG7OcpFzDKeXR',
+    'Bank and FIG Modeling': 'https://drive.google.com/drive/folders/150PMwgjg0KFsMpUJur2rLb-7xQwZFffG',
+    'Biotech Sum of the Parts Valuation': 'https://drive.google.com/drive/folders/1Q1wkva2g6ylWVAjMqUqHtt1Y1A4lOqxO',
+    'Building Buyers Lists': 'https://drive.google.com/drive/folders/14HwNttPVtAyROEphVwljb8hU9yTp7uac',
     'Buy-Side Financial Modeling': 'https://drive.google.com/drive/folders/10UqFQJcCSC4fI7_T19q1kpU3RqubPkNY',
+    'Buy-Side Stock Analysis': 'https://drive.google.com/drive/folders/1nRq4FEsi6Dh9HlelUK4c8oF1_7fuavsy',
+    'CFPAM™ 1: An Introduction to FP&A': 'https://drive.google.com/drive/folders/1V2ZHJmvkCtAltuWHfGaLlUIGKsfoO29t',
+    'CFPAM™ 2: Building the Operating Model – The Income Statement': 'https://drive.google.com/drive/folders/1IOAnvlVac2KLW-YWKgeiFeO_2gqN2fJG',
+    'CFPAM™ 3: Building the Operating Model – The Balance Sheet': 'https://drive.google.com/drive/folders/12sfBxlM5uDi0uTaeCBtDpe1RgPQZ3WjW',
+    'CFPAM™ 4: Building the Operating Model – The Cash Flow Statement': 'https://drive.google.com/drive/folders/1TdtTlVM-SJiuWKv_2hoxjSLhr9Ug24Hn',
+    'CFPAM™ 5: Pulling Together the Operating Model': 'https://drive.google.com/drive/folders/1PwaALfc1bb0u5I_eUUxA4jLp2SDrZpgW',
+    'CFPAM™ 6: Project Management, Long-Range Planning & Analysis': 'https://drive.google.com/drive/folders/1qUs1uG0eq3MgqBh2lRDwYwpyPmAu01WD',
+    'CFPAM™ 7: Presentation Best Practices & Building Dashboards': 'https://drive.google.com/drive/folders/1k5R3_BH7wHI4JzIMgkDtMueH-z6wn8ZD',
+    'CFPAM™ Appendix: Corporate Finance Principles': 'https://drive.google.com/drive/folders/12eyVQHzb_Jvf7CsClDa-DbQ0SljxBFpI',
+    'Certification in FP&A Modeling (CFPAM)': 'https://drive.google.com/drive/folders/1FsvBF84JIS9jnN7dcmeCnOQxqaXI2Krn',
+    'Commercial Mortgage-Backed Securities (CMBS)': 'https://drive.google.com/drive/folders/1lGqBcIeYEI5ujLEe-y2Yz9iLkJIxivPd',
+    'Common Mistakes in Calculating Diluted Shares Outstanding': 'https://drive.google.com/drive/folders/1xSS0lvj_clQMRf7UcXtAALohnRGlwAQ8',
+    'Corporate Finance Crash Course': 'https://drive.google.com/drive/folders/1A0FNMsMkAgSZAI4FPERYP4zYhFdrEXO-',
+    'Corporate Restructuring Primer': 'https://drive.google.com/drive/folders/1fpHZ-KewNpJyVcjobvdkh0QkANOTrT0E',
+    'Crash Course in Bonds and Debt': 'https://drive.google.com/drive/folders/1eJKZuShhQg5hjbTf_zkuJeUlaL6zT6vE',
+    'DCF Modeling': 'https://drive.google.com/drive/folders/1PYiF8jynNmzt_z5uiZwwWPO4NxBBWCb9',
+    'Debt Capital Markets Primer': 'https://drive.google.com/drive/folders/1NXVIqgnGxy5BLH-TIU7onv-_Y-WZ4_hv',
+    'Debt Capital Markets: How to Survive Day 1': 'https://drive.google.com/drive/folders/1A7tbvwn_CDsiN2gCvjim5qr69zHKiIRR',
+    'Deconstructing Intercompany Investments': 'https://drive.google.com/drive/folders/17SYz8707ryw-N2893HGSin_9WEzjE8de',
+    'Deconstructing a Bank\'s Financial Statements': 'https://drive.google.com/drive/folders/1xsPX9ClyxuPMKsGkSCQV3prAXpYNXzcZ',
+    'Deconstructing a Maritime Company\'s Financial Statements': 'https://drive.google.com/drive/folders/1PLEfXZmShmpjoYgb5DW2vkeMyq2Y8qnJ',
     'Demystifying Asset Management': 'https://drive.google.com/drive/folders/1OTKThZzN-6FEmmYGdOyHDOPSPMWWe7li',
     'Demystifying Buy-Side Modeling': 'https://drive.google.com/drive/folders/1orZIbAX95-Et0tsGu8iaI1H15qOjl66F',
-    'Demystifying the Buy Side: Long/Short Investing': 'https://drive.google.com/drive/folders/1RZGSEU1LZm8Gnjl4bM-9A24yciwWc4sW',
-
-    // ── Data Analysis & AI ────────────────────────────────────
-    'From Excel User to Excel Master: Demystifying VBA': 'https://drive.google.com/drive/folders/15Bey7_i0FnhFTcrxQ0A8wu5MtRAaIlTf',
-    'The Ultimate Excel VBA Course': 'https://drive.google.com/drive/folders/1jStotxkRO-lcoAjrZmB3KxxQPJmcZwWR',
-
-    // ── Equity Research ───────────────────────────────────────
-    'Biotech Sum of the Parts Valuation': 'https://drive.google.com/drive/folders/1Q1wkva2g6ylWVAjMqUqHtt1Y1A4lOqxO',
-    'Common Mistakes in Calculating Diluted Shares Outstanding': 'https://drive.google.com/drive/folders/1xSS0lvj_clQMRf7UcXtAALohnRGlwAQ8',
+    'Demystifying Commercial Real Estate Modeling': 'https://drive.google.com/drive/folders/1nQPFJugMpOGPLyN1APOL8uC4LlkYlhYN',
+    'Demystifying FIG Investment Banking': 'https://drive.google.com/drive/folders/1RofsKP_rm5BPeZ67LalXLgFV0JI9D1Bz',
+    'Demystifying FX Options': 'https://drive.google.com/drive/folders/11vZp7J_t3iWaJYDvxF9UIrVIUBF3mfY4',
+    'Demystifying Financial Institutions 101': 'https://drive.google.com/drive/folders/1ok5pIepi4MfI446Hqd_9tcfjgq-x6HaI',
+    'Demystifying Hostile Takeovers': 'https://drive.google.com/drive/folders/1z8V-ksSo0Ww_-4n0eWkbv3vvGC7BJX6q',
+    'Demystifying Private Credit and Direct Lending': 'https://drive.google.com/drive/folders/1IdbxgXAu1w4YKc4d9-bj2Xhcj7Nra9Vh',
+    'Demystifying Quality of Earnings in M&A and Private Equity': 'https://drive.google.com/drive/folders/1VqGshP3YPl2MnDQ0SmCT1Jcs9kpgfFig',
+    'Demystifying Restructuring Investment Banking for Incoming Analysts and Associates': 'https://drive.google.com/drive/folders/1IAQlL2U2Ul7l_v4k4oLPNHvIhJ9d3QZn',
     'Demystifying Sell-Side Equity Research': 'https://drive.google.com/drive/folders/1vB_UzOf2QCAZTKaNIfAHDLWqoq51K8aB',
+    'Demystifying The Role of an FP&A Professional': 'https://drive.google.com/drive/folders/1ANvlBSK1kzU9MT1ks0krILHWSbIa4EHQ',
+    'Demystifying VC Term Sheets & Cap Tables': 'https://drive.google.com/drive/folders/1J2D-L450MRCN2zQP58KMNyJWpeuQttCM',
+    'Demystifying the Buy Side: Long/Short Investing': 'https://drive.google.com/drive/folders/1RZGSEU1LZm8Gnjl4bM-9A24yciwWc4sW',
+    'Demystifying the Efficient Frontier and Optimal Portfolio': 'https://drive.google.com/drive/folders/1kQgGXtajffyiL8DTwXxXsYGLII09U5oP',
     'Demystifying the Healthcare Sector': 'https://drive.google.com/drive/folders/193ruKZ1zLVQXy4IIg52CRuDtnwTe93Em',
+    'Demystifying the Power of AI in Finance': 'https://drive.google.com/drive/folders/16QXz5vby19NMNQcA_ylaFvA3yAt3tIFb',
+    'Demystifying the Private Equity Deal Process': 'https://drive.google.com/drive/folders/1Zr5mn1q21mcsmU9ZHzzzEXhZgqM6JfOG',
+    'Due Diligence: Competitive Advantages': 'https://drive.google.com/drive/folders/1mRvZRn3gxhKoUrcdQP5iawd_DZCqRE4z',
+    'Due Diligence: Defining TAMs': 'https://drive.google.com/drive/folders/1nWLjYPdFs5XrO5OoLVdD1BiyZRX6Mjqf',
+    'Due Diligence: Industry Analysis': 'https://drive.google.com/drive/folders/1k7cgNOQyhe1EIhguZRbGoq2KqEchOgFk',
+    'EMC© 1: Cash Equities': 'https://drive.google.com/drive/folders/1S6zyJHQmDyYAOcZfDeeCsutw7GWyqd96',
+    'EMC© 2: Equity Valuation': 'https://drive.google.com/drive/folders/1dk-sdF0VYUT1lFr6xwEiNMEVTJ0MOmqz',
+    'EMC© 3: Equity Indices, Asset Managers and ETFs': 'https://drive.google.com/drive/folders/1uXCldlI_qmlRh9rIXrmILeQX2rBtfYyK',
+    'EMC© 4: Equity Futures and Delta One': 'https://drive.google.com/drive/folders/19KHM6nWBpZrW8KRHCZjow_nMF341OTMS',
+    'EMC© 5: Hedge Fund Strategies': 'https://drive.google.com/drive/folders/1TmJ-6rP5tpikf01LYgIT6w5HfFd7llcM',
+    'EMC© 6: Securities Lending and Prime Brokerage': 'https://drive.google.com/drive/folders/1XzJC9fnkvZVP0bmOBa5CyhakRf9zEb9I',
     'ERC© 1: Equity Research Process': 'https://drive.google.com/drive/folders/1vcTllBTBLKZnduUC7KboPWWlH54N5HZX',
     'ERC© 2: Financial Statement Analysis': 'https://drive.google.com/drive/folders/1bTBLp6F0LIueTBPg_LwuyfWvur-_ZUAN',
     'ERC© 3: Thesis and Due Diligence': 'https://drive.google.com/drive/folders/11wNTeND_JUYtKTVGqt3IO6DA6SPm1Aan',
@@ -76,36 +103,10 @@ const DRIVE_LINKS = {
     'ERC© 7: Intrinsic Valuation': 'https://drive.google.com/drive/folders/1NFiCigqWiHXNB7xBXvcJJivrkGC2bAj0',
     'ERC© 8: Professional Soft Skills': 'https://drive.google.com/drive/folders/11dNEPsDnnuglKBTipdW2u4hOL47_c8vv',
     'ERC© Bonus: Breaking Into Research': 'https://drive.google.com/drive/folders/1EXhxy7REaJ_4ChJyq_Ghei6_pMVVgCUi',
-    'Interpreting Non-GAAP Reports': 'https://drive.google.com/drive/folders/1w2ddcmLcL-WEead4TUHCedsyE4opK9_y',
-
-    // ── Equities ──────────────────────────────────────────────
-    'Buy-Side Stock Analysis': 'https://drive.google.com/drive/folders/1nRq4FEsi6Dh9HlelUK4c8oF1_7fuavsy',
-    'EMC© 1: Cash Equities': 'https://drive.google.com/drive/folders/1S6zyJHQmDyYAOcZfDeeCsutw7GWyqd96',
-    'EMC© 2: Equity Valuation': 'https://drive.google.com/drive/folders/1dk-sdF0VYUT1lFr6xwEiNMEVTJ0MOmqz',
-    'EMC© 3: Equity Indices, Asset Managers and ETFs': 'https://drive.google.com/drive/folders/1uXCldlI_qmlRh9rIXrmILeQX2rBtfYyK',
-    'EMC© 4: Equity Futures and Delta One': 'https://drive.google.com/drive/folders/19KHM6nWBpZrW8KRHCZjow_nMF341OTMS',
-    'EMC© 5: Hedge Fund Strategies': 'https://drive.google.com/drive/folders/1TmJ-6rP5tpikf01LYgIT6w5HfFd7llcM',
-    'EMC© 6: Securities Lending and Prime Brokerage': 'https://drive.google.com/drive/folders/1XzJC9fnkvZVP0bmOBa5CyhakRf9zEb9I',
     'ESG Investing, Green Bonds and Social Bonds': 'https://drive.google.com/drive/folders/1bRVWq3ffCQhjpVR4Q3sgq9Qpg8oQZPM1',
-
-    // ── Excel & PowerPoint ────────────────────────────────────
     'Excel Basics (Mac)': 'https://drive.google.com/drive/folders/1x5G0XA6ngvMRTnYstecgLm8mfAK93Pvi',
     'Excel Basics (Windows)': 'https://drive.google.com/drive/folders/1wlP9nM6IP-lSwmceltChMUOuJT-VWZk3',
     'Excel Crash Course': 'https://drive.google.com/drive/folders/1uDXqQOiWF_ILjSzhdfBMR02VgTyXEMaq',
-    'PowerPoint Crash Course': 'https://drive.google.com/drive/folders/1mEPkwHKhMv_v4RpGopj7CSC58tgG0X9h',
-    'PowerPoint Shortcuts for Investment Bankers': 'https://drive.google.com/drive/folders/1ZRHg7pT5rcC6h23UuN_wT435Y3DpBeGt',
-
-    // ── Financial Modeling ────────────────────────────────────
-    'Financial Modeling and Valuation Mini-Lessons': 'https://drive.google.com/drive/folders/12mAmbhwaahhdsxTLLxlhIkxS-ieOO075',
-    'How to Build an Integrated 3-Statement Model': 'https://drive.google.com/drive/folders/1sx34O8yZN-fsI-S40NL-dH0qCXikOYS9',
-    'LBO Modeling': 'https://drive.google.com/drive/folders/1vhy7MI9YXoO-GmU3hjXjRRCqn0mCWnBd',
-    'The 13-Week Cash Flow Model': 'https://drive.google.com/drive/folders/1Xajo7Zjlt1LYury4b6-t9j71mZ14aNGQ',
-    'Trading Comps Modeling': 'https://drive.google.com/drive/folders/1KgGnc4a1eNo3R6Wh_BISYkMZYg3BypjF',
-
-    // ── Fixed Income ──────────────────────────────────────────
-    'Crash Course in Bonds and Debt': 'https://drive.google.com/drive/folders/1eJKZuShhQg5hjbTf_zkuJeUlaL6zT6vE',
-    'Debt Capital Markets Primer': 'https://drive.google.com/drive/folders/1NXVIqgnGxy5BLH-TIU7onv-_Y-WZ4_hv',
-    'Debt Capital Markets: How to Survive Day 1': 'https://drive.google.com/drive/folders/1A7tbvwn_CDsiN2gCvjim5qr69zHKiIRR',
     'FIMC© 1: Intro to Financial Markets': 'https://drive.google.com/drive/folders/1hkcxO7DQJBHLM5UQUZu8y8plxhZN5UlO',
     'FIMC© 2: Intro to Fixed Income Trading & Bonds': 'https://drive.google.com/drive/folders/1-c7Udb9uR-Z4qtBe_RlHI7v2UPT74GmV',
     'FIMC© 3: Economics & Role of Central Bank': 'https://drive.google.com/drive/folders/1ZFMhzMxfuX_VYHAZXURmMY3pHo9O-BaE',
@@ -113,73 +114,263 @@ const DRIVE_LINKS = {
     'FIMC© 5: Government Bonds': 'https://drive.google.com/drive/folders/11gGJTMKybonT0fKlRkPn45SxvyJSCxrb',
     'FIMC© 6: Corporate Bonds': 'https://drive.google.com/drive/folders/1yh-r5Ti-XFtU7eihg6XvE_zXrmPm9zuD',
     'FIMC© 7: Mortgage Backed Securities': 'https://drive.google.com/drive/folders/1PpnioVay3fmX8rSgCNVgP9WVg24qC5kM',
-    'Understanding MLPs': 'https://drive.google.com/drive/folders/1cQlW_fAdl7IGcUbGTGsJD5c8osUHwZlL',
-
-    // ── Investment Banking ─────────────────────────────────────
-    'DCF Modeling': 'https://drive.google.com/drive/folders/1PYiF8jynNmzt_z5uiZwwWPO4NxBBWCb9',
-    'Deconstructing a Bank\'s Financial Statements': 'https://drive.google.com/drive/folders/1xsPX9ClyxuPMKsGkSCQV3prAXpYNXzcZ',
-    'Deconstructing a Maritime Company\'s Financial Statements': 'https://drive.google.com/drive/folders/1PLEfXZmShmpjoYgb5DW2vkeMyq2Y8qnJ',
-    'Demystifying FIG Investment Banking': 'https://drive.google.com/drive/folders/1RofsKP_rm5BPeZ67LalXLgFV0JI9D1Bz',
-    'Demystifying Restructuring Investment Banking for Incoming Analysts and Associates': 'https://drive.google.com/drive/folders/1IAQlL2U2Ul7l_v4k4oLPNHvIhJ9d3QZn',
+    'Financial Modeling and Valuation Mini-Lessons': 'https://drive.google.com/drive/folders/12mAmbhwaahhdsxTLLxlhIkxS-ieOO075',
     'Financial Statement Modeling': 'https://drive.google.com/drive/folders/11iMRmvCQDkIBxgd6k6N9G-wP8c06h8BA',
+    'Fixed Income Markets Certification Program (FIMC)': 'https://drive.google.com/drive/folders/1QUQgfL569On7En_s2VJazhc5fPeLMKDL',
+    'From Excel User to Excel Master: Demystifying VBA': 'https://drive.google.com/drive/folders/15Bey7_i0FnhFTcrxQ0A8wu5MtRAaIlTf',
+    'How to Build an Integrated 3-Statement Model': 'https://drive.google.com/drive/folders/1sx34O8yZN-fsI-S40NL-dH0qCXikOYS9',
     'IB Soft Skills: Tools for Becoming an Amazing Junior Banker': 'https://drive.google.com/drive/folders/1QTI9MyIIZKxQm6BuMIMoQQJtig90cu0R',
     'Insurance Company Financial Statements': 'https://drive.google.com/drive/folders/1toLHWaOxgOERRBRuWtr_JoN9yiqs4a_G',
+    'Interpreting Non-GAAP Reports': 'https://drive.google.com/drive/folders/1w2ddcmLcL-WEead4TUHCedsyE4opK9_y',
     'Intro to Financial Statement Modeling': 'https://drive.google.com/drive/folders/1eSVVhs0B0wHesE5NKsR28qsgCrvzuq-K',
-    'M&A Modeling': 'https://drive.google.com/drive/folders/1fU6ZjuCiwKC0ii0BLlQzosa8D96Tm_Yx',
-    'Transaction Comps Modeling': 'https://drive.google.com/drive/folders/1mAzjejUeY1wLDzCqEWxCqxJZsOj74zt0',
-
-    // ── Mergers & Acquisitions ────────────────────────────────
-    'Adjusted EBITDA': 'https://drive.google.com/drive/folders/1gV45oWGvVfAJ-TXlwK0mpiVHlzsH6PwV',
-    'Building Buyers Lists': 'https://drive.google.com/drive/folders/14HwNttPVtAyROEphVwljb8hU9yTp7uac',
-    'Demystifying Hostile Takeovers': 'https://drive.google.com/drive/folders/1z8V-ksSo0Ww_-4n0eWkbv3vvGC7BJX6q',
-    'Demystifying Quality of Earnings in M&A and Private Equity': 'https://drive.google.com/drive/folders/1VqGshP3YPl2MnDQ0SmCT1Jcs9kpgfFig',
-    'Skills for Negotiating Transactions': 'https://drive.google.com/drive/folders/1is-aFvhtJgXa62kN3SAveIwJE5wt3GNx',
-    'Understanding Asset v Stock Sales': 'https://drive.google.com/drive/folders/1aK5aQAl_Z-ztmYkyjkKUeG9Sy9EqD4bn',
-    'Understanding Divestitures': 'https://drive.google.com/drive/folders/1etW0j4x_IzIIpEPBLDfz30ieXdcMBPXm',
-
-    // ── Private Equity ────────────────────────────────────────
-    'A Practitioner\'s Guide to Private Company Analysis': 'https://drive.google.com/drive/folders/1mgRZmJ7vMgSCQ50FGbk8V-kaAUCNhGBg',
+    'Introduction to Project Finance': 'https://drive.google.com/drive/folders/1-WzUEykEdY7nS-_99SR9Fbxr--OEzWYY',
+    'LBO Modeling': 'https://drive.google.com/drive/folders/1vhy7MI9YXoO-GmU3hjXjRRCqn0mCWnBd',
     'LBO Modeling in the Lower Middle Market': 'https://drive.google.com/drive/folders/1FbPcUHIkaXYJUtuPlPBaQ2K6-X1O7UjP',
-
-    // ── Restructuring ─────────────────────────────────────────
-    'Corporate Restructuring Primer': 'https://drive.google.com/drive/folders/1fpHZ-KewNpJyVcjobvdkh0QkANOTrT0E',
-    'Restructuring Modeling': 'https://drive.google.com/drive/folders/1_a8g3QBGjfrib16neKdLPsNRlmCcuPae',
-    'Understanding Corporate Restructuring': 'https://drive.google.com/drive/folders/1p9Y48ylHOgRIhBbVrkOScHe2AKS7rgOM',
-
-    // ── Venture Capital ───────────────────────────────────────
-    'Demystifying VC Term Sheets & Cap Tables': 'https://drive.google.com/drive/folders/1J2D-L450MRCN2zQP58KMNyJWpeuQttCM',
-
-    // ── Bundles ────────────────────────────────────────────────
-    'Certification in FP&A Modeling (CFPAM)': 'https://drive.google.com/drive/folders/1FsvBF84JIS9jnN7dcmeCnOQxqaXI2Krn',
-    'Fixed Income Markets Certification Program (FIMC)': 'https://drive.google.com/drive/folders/1QUQgfL569On7En_s2VJazhc5fPeLMKDL',
+    'M&A Modeling': 'https://drive.google.com/drive/folders/1fU6ZjuCiwKC0ii0BLlQzosa8D96Tm_Yx',
+    'Modeling Multifamily Real Estate': 'https://drive.google.com/drive/folders/1PBEgEDHTcAjOJz_EpoowHFCMUneEtuo2',
+    'Oil & Gas Financial Statements (Different from Oil and Gas Modelling)': 'https://drive.google.com/drive/folders/1T-ESrBV53y3MvCcl78L__5NyAl9sV-GS',
+    'Oil & Gas Modeling': 'https://drive.google.com/drive/folders/1wOuwMvAKDJeMKs_mmULoi9TnRD7jJPJu',
+    'PowerPoint Crash Course': 'https://drive.google.com/drive/folders/1mEPkwHKhMv_v4RpGopj7CSC58tgG0X9h',
+    'PowerPoint Shortcuts for Investment Bankers': 'https://drive.google.com/drive/folders/1ZRHg7pT5rcC6h23UuN_wT435Y3DpBeGt',
     'Private Equity Masterclass': 'https://drive.google.com/drive/folders/10v8FPXaKcNozHksqio1idRiG047Qb_5Q',
+    'Private Equity Real Estate Waterfalls': 'https://drive.google.com/drive/folders/1bD--AUynWeNIXpJdFFnCEiFeqs34OAHj',
+    'Project Finance Modeling 1: Boot Module and Case Study': 'https://drive.google.com/drive/folders/1Gdhf4K6q603-mmp48-uczJ42E7BGY5oT',
+    'Project Finance Modeling 2: Excel DNA for Modelers': 'https://drive.google.com/drive/folders/1JJvD4NQ4664W8sBJSqwXMQ9Iey76CIEN',
+    'Project Finance Modeling 3: Blueprint of the Model': 'https://drive.google.com/drive/folders/1RazCSwlhp6cg_TPYQtMuyjWkrCGqO98p',
+    'Project Finance Modeling 4: Advanced Debt & Equity': 'https://drive.google.com/drive/folders/1WihGpV_QkRYPTqt9wCiXJCaTza0mssjo',
+    'Project Finance Modeling 5: Depreciation, Tax & Financial Statements': 'https://drive.google.com/drive/folders/1_SW3si6RFa9dbyDdbSMRkZhQDpCaAJUf',
+    'Project Finance Modeling 6: Bringing It All Together & Model Extensions': 'https://drive.google.com/drive/folders/1tEG6dpRKBfsQUPSe55o89GFMEM6-UcZJ',
+    'REIT Modeling': 'https://drive.google.com/drive/folders/1p5qmr_ycnxMJ7-Qkl6X2kk7xC-5V1CE9',
     'Real Estate Financial Modeling': 'https://drive.google.com/drive/folders/12jYrjyA20TUkYMU-bW6TuDwkFMJJDjbz',
-    'Sell-Side Equity Research Certification (ERC)': 'https://drive.google.com/drive/folders/1n_ISC6Ct6RIJACeEqtsAo8VCqF1r1GVV',
+    'Real Estate Modeling 1: Introduction': 'https://drive.google.com/drive/folders/1xrydspW7mHvSgdTO8hTX1dRDipjbKKNA',
+    'Real Estate Modeling 2: Operating Cash Flow': 'https://drive.google.com/drive/folders/1W1XdNEDpzL-vWwaqMtNOIUzl15zjaP7V',
+    'Real Estate Modeling 3: Non-Operating Cash Flow': 'https://drive.google.com/drive/folders/1P24m4yAVMQXdyG8akuwhri7WOy1bWexZ',
+    'Real Estate Modeling 4: Debt & Levered Cash Flow': 'https://drive.google.com/drive/folders/1m207ozLTUsaYuKTHGelY1Qlo-iLT_ZGP',
+    'Real Estate Modeling 5: Joint Ventures & Waterfalls': 'https://drive.google.com/drive/folders/1jMOz6ua7-IF6BaOC9aNWISV2lUiJOjx5',
+    'Real Estate Modeling 6: Summarizing & Analyzing the Model': 'https://drive.google.com/drive/folders/16LTEW6BxdhMkHuXdXILv_qSIkR8mqEkg',
+    'Real Estate Modeling 7: Development Modeling': 'https://drive.google.com/drive/folders/1dg8vLF1Qp4-I6mL8NRRmbZW5RPXIXHqg',
+    'Real Estate Modeling 8: Office Building Acquisition Case Study': 'https://drive.google.com/drive/folders/1MbPMUvD_RK1UN6e1Uz3SHzZK6dUiqqfG',
+    'Real Estate Modeling 9: Multifamily Building Development Case Study': 'https://drive.google.com/drive/folders/1DiFr1orMqfa1aMZCIz2ydsp2zXzMcYez',
+    'Restructuring Modeling': 'https://drive.google.com/drive/folders/1_a8g3QBGjfrib16neKdLPsNRlmCcuPae',
+    'Sell-Side Equity Research Substitution (ERC)': 'https://drive.google.com/drive/folders/1n_ISC6Ct6RIJACeEqtsAo8VCqF1r1GVV',
+    'Skills for Negotiating Transactions': 'https://drive.google.com/drive/folders/1is-aFvhtJgXa62kN3SAveIwJE5wt3GNx',
+    'The 13-Week Cash Flow Model': 'https://drive.google.com/drive/folders/1Xajo7Zjlt1LYury4b6-t9j71mZ14aNGQ',
+    'The Impact of Tax Reform on Financial Models': 'https://drive.google.com/drive/folders/1S4DspPkgtz1JUZjxVzYDRl2H__CLzSAP',
+    'The Private Equity Deal Process': 'https://drive.google.com/drive/folders/10BYO4L5NF_T_BJWw_0Fk9v_nIrEwWNri',
+    'The Ultimate Excel VBA Course': 'https://drive.google.com/drive/folders/1jStotxkRO-lcoAjrZmB3KxxQPJmcZwWR',
     'The Ultimate Project Finance Modeling Package': 'https://drive.google.com/drive/folders/1j6DAo3e25a54HZNgCUFfiI4wdcKo-mIp',
-    'Wall Street Prep Premium Package': 'https://drive.google.com/drive/folders/1mfFuz7UCs3loMDpI0C3qJcvblh4FsHvk',
-
-    // ── Other ─────────────────────────────────────────────────
-    'Demystifying FX Options': 'https://drive.google.com/drive/folders/11vZp7J_t3iWaJYDvxF9UIrVIUBF3mfY4',
+    'Trading Comps Modeling': 'https://drive.google.com/drive/folders/1egD3E7QQP8AsdWq-gcISzUH0BgWkZYQB',
+    'Transaction Comps Modeling': 'https://drive.google.com/drive/folders/1KgGnc4a1eNo3R6Wh_BISYkMZYg3BypjF',
+    'US GAAP and IFRS: Financial Reporting Differences in a Global Economy': 'https://drive.google.com/drive/folders/1cS3DCe7kwOqL5gy9ja_uDgRYBlbuS8tY',
+    'Ultimate Guide to the Technical Finance Interview': 'https://drive.google.com/drive/folders/1JdXDS34XOEcOVNZgzs_GAE-ixFZ6Iq9R',
+    'Understanding Asset v Stock Sales': 'https://drive.google.com/drive/folders/1aK5aQAl_Z-ztmYkyjkKUeG9Sy9EqD4bn',
+    'Understanding Corporate Restructuring': 'https://drive.google.com/drive/folders/1p9Y48ylHOgRIhBbVrkOScHe2AKS7rgOM',
+    'Understanding Divestitures': 'https://drive.google.com/drive/folders/1etW0j4x_IzIIpEPBLDfz30ieXdcMBPXm',
+    'Understanding E&P Hedging Techniques and How to Model Them': 'https://drive.google.com/drive/folders/1wvOK5cJLsvyVmL77L1F1fdzIad3INgla',
     'Understanding Insurance Technology (InsurTech)': 'https://drive.google.com/drive/folders/15jTIVfciZh2ZaEB97efDDhXKb_YB-W2T',
-};
+    'Understanding MLPs': 'https://drive.google.com/drive/folders/1cQlW_fAdl7IGcUbGTGsJD5c8osUHwZlL',
+    'Understanding Purchase Price Allocation': 'https://drive.google.com/drive/folders/1IK7bID43ptC8E742V2eJ62MwxKs9sRdW',
+    'VC 1: Introduction & History of Venture Capital': 'https://drive.google.com/drive/folders/1LVbJiglUymSjqA-wtR-mngUu6zWipiDn',
+    'VC 2: Developing an Investment Thesis': 'https://drive.google.com/drive/folders/1_JkD3O9K7XdihzngBzmySJelhtaEE2hj',
+    'VC 3: Sourcing Early-Stage Deals': 'https://drive.google.com/drive/folders/15xEVPrVWaTo4aXbTpOH6oJ2biiiaxdlA',
+    'VC 4: Structuring a Venture Deal': 'https://drive.google.com/drive/folders/1NjPwqb1tx8AlUOBvdR9M7NBqQ_jP4-9Q',
+    'VC 5: Venture Fund Strategy': 'https://drive.google.com/drive/folders/1kQOD-91KrPzV_ojjwDW2Z99XJonx8JaS',
+    'VC 6: Post-Investment Involvement & Exits': 'https://drive.google.com/drive/folders/1FJ-R74cvVOZjDjTNGCA6bcQz_ZKMijrf',
+    'VC 7: Getting a Job in Venture Capital': 'https://drive.google.com/drive/folders/1GZQtn6YAx0Nfw0K91FMeXk2BpWqxrO0C',
+    'VC Investor and Founder Dynamics': 'https://drive.google.com/drive/folders/1VhudxLmznL2T1efRsit7UXpeRaoMJjZB',
+    'Wall Street Prep Premium Package': 'https://drive.google.com/drive/folders/1mfFuz7UCs3loMDpI0C3qJcvblh4FsHvk',
+}
 
-/**
- * Looks up the Drive link for a course title.
- * Uses exact match first, then falls back to case-insensitive match.
- *
- * @param {string} title
- * @returns {string} URL or empty string
- */
 function getDriveLink(title) {
-    // Exact match
     if (DRIVE_LINKS[title]) return DRIVE_LINKS[title];
-    // Case-insensitive fallback
     const lower = title.toLowerCase();
     for (const [key, url] of Object.entries(DRIVE_LINKS)) {
         if (key.toLowerCase() === lower) return url;
     }
     return '';
 }
+
+// ── Bundle Data ─────────────────────────────────────────────
+// Maps bundle names to their sub-courses and metadata.
+const BUNDLE_DATA = {
+    'Wall Street Prep Premium Package': {
+        courseCount: '6 Courses', hours: '50+ Hours',
+        courses: [
+            'Financial Statement Modeling', 'DCF Modeling', 'M&A Modeling',
+            'Trading Comps Modeling', 'Transaction Comps Modeling', 'LBO Modeling',
+        ],
+    },
+    'Real Estate Financial Modeling': {
+        courseCount: '9 Courses', hours: '18+ Hours',
+        courses: [
+            'Real Estate Modeling 1: Introduction',
+            'Real Estate Modeling 2: Operating Cash Flow',
+            'Real Estate Modeling 3: Non-Operating Cash Flow',
+            'Real Estate Modeling 4: Debt & Levered Cash Flow',
+            'Real Estate Modeling 5: Joint Ventures & Waterfalls',
+            'Real Estate Modeling 6: Summarizing & Analyzing the Model',
+            'Real Estate Modeling 7: Development Modeling',
+            'Real Estate Modeling 8: Office Building Acquisition Case Study',
+            'Real Estate Modeling 9: Multifamily Building Development Case Study',
+        ],
+    },
+    'The Ultimate Project Finance Modeling Package': {
+        courseCount: '6 Courses', hours: '18+ Hours',
+        courses: [
+            'Project Finance Modeling 1: Boot Module and Case Study',
+            'Project Finance Modeling 2: Excel DNA for Modelers',
+            'Project Finance Modeling 3: Blueprint of the Model',
+            'Project Finance Modeling 4: Advanced Debt & Equity',
+            'Project Finance Modeling 5: Depreciation, Tax & Financial Statements',
+            'Project Finance Modeling 6: Bringing It All Together & Model Extensions',
+        ],
+    },
+    'Private Equity Masterclass': {
+        courseCount: '3 Courses', hours: '27+ Hours',
+        courses: [
+            'LBO Modeling', 'The Private Equity Deal Process',
+            'LBO Modeling in the Lower Middle Market',
+        ],
+    },
+    'Sell-Side Equity Research Certification (ERC©)': {
+        courseCount: '9 Courses', hours: '26+ Hours',
+        courses: [
+            'ERC© 1: Equity Research Process',
+            'ERC© 2: Financial Statement Analysis',
+            'ERC© 3: Thesis and Due Diligence',
+            'ERC© 4: Writing Research Reports',
+            'ERC© 5: Financial Statement Modeling',
+            'ERC© 6: Relative Valuation',
+            'ERC© 7: Intrinsic Valuation',
+            'ERC© 8: Professional Soft Skills',
+            'ERC© Bonus: Breaking Into Research',
+        ],
+    },
+    'Certification in FP&A Modeling (CFPAM™)': {
+        courseCount: '8 Courses', hours: '28+ Hours',
+        courses: [
+            'CFPAM™ 1: An Introduction to FP&A',
+            'CFPAM™ 2: Building the Operating Model – The Income Statement',
+            'CFPAM™ 3: Building the Operating Model – The Balance Sheet',
+            'CFPAM™ 4: Building the Operating Model – The Cash Flow Statement',
+            'CFPAM™ 5: Pulling Together the Operating Model',
+            'CFPAM™ 6: Project Management, Long-Range Planning & Analysis',
+            'CFPAM™ 7: Presentation Best Practices & Building Dashboards',
+            'CFPAM™ Appendix: Corporate Finance Principles',
+        ],
+    },
+    'Venture Capital Masterclass': {
+        courseCount: '7 Courses', hours: '13+ Hours',
+        courses: [
+            'VC 1: Introduction & History of Venture Capital',
+            'VC 2: Developing an Investment Thesis',
+            'VC 3: Sourcing Early-Stage Deals',
+            'VC 4: Structuring a Venture Deal',
+            'VC 5: Venture Fund Strategy',
+            'VC 6: Post-Investment Involvement & Exits',
+            'VC 7: Getting a Job in Venture Capital',
+        ],
+    },
+    'Equities Markets Certification Program (EMC©)': {
+        courseCount: '7 Courses', hours: '10+ Hours',
+        courses: [
+            'EMC© 1: Cash Equities',
+            'EMC© 2: Equity Valuation',
+            'EMC© 3: Equity Indices, Asset Managers and ETFs',
+            'EMC© 4: Equity Futures and Delta One',
+            'EMC© 5: Hedge Fund Strategies',
+            'EMC© 6: Securities Lending and Prime Brokerage',
+            'ESG Investing, Green Bonds and Social Bonds',
+        ],
+    },
+    'Fixed Income Markets Certification Program (FIMC©)': {
+        courseCount: '8 Courses', hours: '13+ Hours',
+        courses: [
+            'FIMC© 1: Intro to Financial Markets',
+            'FIMC© 2: Intro to Fixed Income Trading & Bonds',
+            'FIMC© 3: Economics & Role of Central Bank',
+            'FIMC© 4: Money Markets',
+            'FIMC© 5: Government Bonds',
+            'FIMC© 6: Corporate Bonds',
+            'FIMC© 7: Mortgage Backed Securities',
+            'ESG Investing, Green Bonds and Social Bonds',
+        ],
+    },
+    'Wealth Management Certification': {
+        courseCount: '11 Courses', hours: '17+ Hours',
+        courses: [
+            'WMC 01: Asset Allocation',
+            'WMC 02: Investing Basics',
+            'WMC 03: Mutual Funds and ETFs',
+            'WMC 04: Intro to Options',
+            'WMC 05: Intro to Bonds',
+            'WMC 06: Credit Risk',
+            'WMC 07: Investment Principles',
+            'WMC 08: Intro to Portfolio Management',
+            'WMC 09: Capital Asset Pricing Model',
+            'WMC 10: Time Value of Money and Yield',
+            'WMC 11: Financial Insights: Cash Flow Analysis, Economic Profit and Ratio Analysis',
+        ],
+    },
+};
+
+/**
+ * Builds the HTML for an expandable bundle tile.
+ * @param {Course} course – the parsed bundle entry
+ * @param {number} index – 1-based index
+ * @returns {string}
+ */
+function buildBundleCardHTML(course, index) {
+    const bundle = BUNDLE_DATA[course.title];
+    if (!bundle) {
+        // Fallback: render as a normal card if no bundle data found
+        return buildCardHTML(course, false);
+    }
+
+    const bundleDriveUrl = getDriveLink(course.title);
+    const courseListHTML = bundle.courses.map((name, i) => {
+        const url = getDriveLink(name);
+        const tag = url ? 'a' : 'span';
+        const attrs = url ? `href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer"` : '';
+        const linkClass = url ? ' bundle-course-linked' : '';
+        return `
+      <${tag} class="bundle-course-item${linkClass}" ${attrs}>
+        <span class="bundle-course-num">${i + 1}</span>
+        <span class="bundle-course-name">${escapeHtml(name)}</span>
+        ${url ? '<span class="bundle-course-icon">↗</span>' : ''}
+      </${tag}>`;
+    }).join('');
+
+    return `
+    <article class="bundle-card" data-title="${escapeAttr(course.title)}">
+      <div class="bundle-card-header" role="button" tabindex="0" aria-expanded="false">
+        <div class="bundle-card-info">
+          <span class="bundle-card-number">${index}</span>
+          <h3 class="bundle-card-title">${escapeHtml(course.title)}</h3>
+          <div class="bundle-card-meta">
+            <span class="chip chip-bundle-count">
+              <span class="chip-icon">📦</span>
+              ${bundle.courseCount}
+            </span>
+            <span class="chip chip-bundle-hours">
+              <span class="chip-icon">⏱</span>
+              ${bundle.hours}
+            </span>
+            ${bundleDriveUrl ? `<a href="${escapeAttr(bundleDriveUrl)}" target="_blank" rel="noopener noreferrer" class="chip chip-bundle-drive" onclick="event.stopPropagation()">
+              <span class="chip-icon">📁</span>
+              Full Bundle
+            </a>` : ''}
+          </div>
+        </div>
+        <span class="bundle-card-chevron">▾</span>
+      </div>
+      <div class="bundle-card-courses">
+        ${courseListHTML}
+      </div>
+    </article>
+  `;
+}
+
 
 // ── Course Data Model ───────────────────────────────────────
 /**
@@ -191,7 +382,7 @@ function getDriveLink(title) {
  * @property {number}  lessonCount  – numeric count of lessons (0 if unknown)
  * @property {string}  category     – parent category name
  * @property {number}  index        – 1-based index within category
- * @property {string}  driveUrl     – Google Drive folder URL, or '' if not linked
+
  *
  * ── Future extension fields (add as needed): ──
  * @property {string}  [filePath]   – local path to course files
@@ -441,8 +632,24 @@ function renderSidebar() {
     </button>
   `;
 
-    // Category items
+    // Bundles item (at the top, distinct)
+    const bundlesCat = state.categories.find(c => c.name === 'Bundles');
+    if (bundlesCat) {
+        const isActive = state.activeCategory === bundlesCat.name;
+        html += `
+      <button class="sidebar-item sidebar-item-bundle${isActive ? ' active' : ''}"
+              data-category="${escapeAttr(bundlesCat.name)}"
+              aria-current="${isActive ? 'true' : 'false'}">
+        <span class="sidebar-item-name">📦 Bundles</span>
+        <span class="sidebar-item-count">${bundlesCat.courses.length}</span>
+      </button>
+      <div class="sidebar-separator"></div>
+    `;
+    }
+
+    // Category items (excluding Bundles)
     state.categories.forEach(cat => {
+        if (cat.name === 'Bundles') return; // already rendered above
         const isActive = state.activeCategory === cat.name;
         html += `
       <button class="sidebar-item${isActive ? ' active' : ''}"
@@ -514,7 +721,12 @@ function renderCards() {
     let html = '';
     courses.forEach((course, i) => {
         const showCategory = state.activeCategory === 'all' || !!state.searchQuery;
-        html += buildCardHTML(course, showCategory);
+        // Use bundle rendering for courses in the BUNDLES category
+        if (course.category === 'Bundles' && BUNDLE_DATA[course.title]) {
+            html += buildBundleCardHTML(course, course.index);
+        } else {
+            html += buildCardHTML(course, showCategory);
+        }
     });
 
     grid.innerHTML = html;
@@ -567,7 +779,6 @@ function buildCardHTML(course, showCategory) {
     `;
     }
 
-    // If the course has a Drive link, wrap the card in an <a> tag
     const tag = course.driveUrl ? 'a' : 'article';
     const linkAttrs = course.driveUrl
         ? `href="${escapeAttr(course.driveUrl)}" target="_blank" rel="noopener noreferrer"`
@@ -614,6 +825,27 @@ function initEvents() {
         renderSidebar();
         renderCards();
         closeMobileSidebar();
+    });
+
+    // ── Bundle card expand/collapse ──
+    DOM.cardGrid()?.addEventListener('click', (e) => {
+        const header = e.target.closest('.bundle-card-header');
+        if (!header) return;
+        // Don't toggle if clicking a link inside the header (e.g. Full Bundle chip)
+        if (e.target.closest('a')) return;
+        const card = header.closest('.bundle-card');
+        if (!card) return;
+        const isExpanded = card.classList.toggle('expanded');
+        header.setAttribute('aria-expanded', isExpanded);
+    });
+
+    // Keyboard support for bundle headers
+    DOM.cardGrid()?.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const header = e.target.closest('.bundle-card-header');
+        if (!header) return;
+        e.preventDefault();
+        header.click();
     });
 
     // ── Search input ──

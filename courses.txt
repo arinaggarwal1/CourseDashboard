@@ -115,6 +115,7 @@ INVESTMENT BANKING
 11. M&A Modeling | 5h 54m | 38 Lessons + Exam
 12. Oil & Gas Modeling | n/a | 0 Lessons
 13. Transaction Comps Modeling | 5h 12m | 52 Lessons + Exam
+14. Ultimate Guide to the Technical Finance Interview
 
 MERGERS & ACQUISITIONS
 
@@ -190,18 +191,26 @@ VENTURE CAPITAL
 7.  VC 6: Post-Investment Involvement & Exits | 1h 58m | 26 Lessons + Exam
 8.  VC 7: Getting a Job in Venture Capital | 1h 3m | 13 Lessons
 9.  VC Investor and Founder Dynamics | 1h 34m | 27 Lessons + Exam
-
 BUNDLES
 
-1.  Certification in FP&A Modeling (CFPAM)
-2.  Fixed Income Markets Certification Program (FIMC)
-3.  Private Equity Masterclass
-4.  Real Estate Financial Modeling
-5.  Sell-Side Equity Research Certification (ERC)
-6.  The Ultimate Project Finance Modeling Package
-7.  Wall Street Prep Premium Package
+1.  Wall Street Prep Premium Package | 6 Courses | 50+ Hours
+2.  Real Estate Financial Modeling | 9 Courses | 18+ Hours
+3.  The Ultimate Project Finance Modeling Package | 6 Courses | 18+ Hours
+4.  Private Equity Masterclass | 3 Courses | 27+ Hours
+5.  Sell-Side Equity Research Certification (ERC©) | 9 Courses | 26+ Hours
+6.  Certification in FP&A Modeling (CFPAM™) | 8 Courses | 28+ Hours
+7.  Venture Capital Masterclass | 7 Courses | 13+ Hours
+8.  Equities Markets Certification Program (EMC©) | 7 Courses | 10+ Hours
+9.  Fixed Income Markets Certification Program (FIMC©) | 8 Courses | 13+ Hours
+10. Wealth Management Certification | 11 Courses | 17+ Hours
 
 OTHER
 
 1.  Demystifying FX Options
 2.  Understanding Insurance Technology (InsurTech)
+3.  Demystifying Financial Institutions 101
+4.  Demystifying Private Credit and Direct Lending
+5.  Demystifying the Efficient Frontier and Optimal Portfolio
+6.  Oil & Gas Financial Statements (Different from Oil and Gas Modelling)
+7.  Sell-Side Equity Research Substitution (ERC)
+8.  Understanding E&P Hedging Techniques and How to Model Them
