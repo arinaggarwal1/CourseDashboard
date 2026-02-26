@@ -581,6 +581,7 @@ function getFilteredCourses() {
     // Stage 1: Category filter
     if (state.activeCategory === 'all') {
         state.categories.forEach(cat => {
+            if (cat.name === 'Bundles') return; // Bundles have their own section
             courses = courses.concat(cat.courses);
         });
     } else {
@@ -617,8 +618,8 @@ function renderSidebar() {
     const nav = DOM.sidebarNav();
     if (!nav) return;
 
-    // Count total courses
-    const totalCount = state.categories.reduce((sum, cat) => sum + cat.courses.length, 0);
+    // Count total courses (excluding Bundles)
+    const totalCount = state.categories.reduce((sum, cat) => cat.name === 'Bundles' ? sum : sum + cat.courses.length, 0);
 
     let html = '';
 
